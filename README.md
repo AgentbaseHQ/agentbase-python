@@ -1,5 +1,9 @@
 # Agentbase Python API library
 
+This is the official Python library for the Agentbase API (https://www.agentbase.sh).
+
+Visit the Agentbase API documentation [here](https://docs.agentbase.sh/).
+
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/agentbase-sdk.svg?label=pypi%20(stable))](https://pypi.org/project/agentbase-sdk/)
 
