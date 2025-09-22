@@ -28,7 +28,7 @@ class GetMessagesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/agentbase-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/AgentbaseHQ/agentbase-python#accessing-raw-response-data-eg-headers
         """
         return GetMessagesResourceWithRawResponse(self)
 
@@ -37,7 +37,7 @@ class GetMessagesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/agentbase-python#with_streaming_response
+        For more information, see https://www.github.com/AgentbaseHQ/agentbase-python#with_streaming_response
         """
         return GetMessagesResourceWithStreamingResponse(self)
 
@@ -89,7 +89,7 @@ class AsyncGetMessagesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/agentbase-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/AgentbaseHQ/agentbase-python#accessing-raw-response-data-eg-headers
         """
         return AsyncGetMessagesResourceWithRawResponse(self)
 
@@ -98,7 +98,7 @@ class AsyncGetMessagesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/agentbase-python#with_streaming_response
+        For more information, see https://www.github.com/AgentbaseHQ/agentbase-python#with_streaming_response
         """
         return AsyncGetMessagesResourceWithStreamingResponse(self)
 
