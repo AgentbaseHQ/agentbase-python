@@ -205,7 +205,7 @@ class Agentbase(SyncAPIClient):
         mcp_servers: Iterable[client_run_agent_params.McpServer] | Omit = omit,
         mode: Literal["flash", "fast", "max"] | Omit = omit,
         rules: SequenceNotStr[str] | Omit = omit,
-        streaming: bool | Omit = omit,
+        streaming_tokens: bool | Omit = omit,
         system: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -238,7 +238,7 @@ class Agentbase(SyncAPIClient):
 
           rules: A list of constraints that the agent must follow.
 
-          streaming: Whether to stream the agent messages token by token.
+          streaming_tokens: Whether to stream the agent messages token by token.
 
           system: A system prompt to provide system information to the agent.
 
@@ -259,7 +259,7 @@ class Agentbase(SyncAPIClient):
                     "mcp_servers": mcp_servers,
                     "mode": mode,
                     "rules": rules,
-                    "streaming": streaming,
+                    "streaming_tokens": streaming_tokens,
                     "system": system,
                 },
                 client_run_agent_params.ClientRunAgentParams,
@@ -454,7 +454,7 @@ class AsyncAgentbase(AsyncAPIClient):
         mcp_servers: Iterable[client_run_agent_params.McpServer] | Omit = omit,
         mode: Literal["flash", "fast", "max"] | Omit = omit,
         rules: SequenceNotStr[str] | Omit = omit,
-        streaming: bool | Omit = omit,
+        streaming_tokens: bool | Omit = omit,
         system: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -487,7 +487,7 @@ class AsyncAgentbase(AsyncAPIClient):
 
           rules: A list of constraints that the agent must follow.
 
-          streaming: Whether to stream the agent messages token by token.
+          streaming_tokens: Whether to stream the agent messages token by token.
 
           system: A system prompt to provide system information to the agent.
 
@@ -508,7 +508,7 @@ class AsyncAgentbase(AsyncAPIClient):
                     "mcp_servers": mcp_servers,
                     "mode": mode,
                     "rules": rules,
-                    "streaming": streaming,
+                    "streaming_tokens": streaming_tokens,
                     "system": system,
                 },
                 client_run_agent_params.ClientRunAgentParams,
