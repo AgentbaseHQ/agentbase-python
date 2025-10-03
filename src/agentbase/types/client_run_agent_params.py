@@ -21,7 +21,7 @@ class ClientRunAgentParams(TypedDict, total=False):
     If not provided, a new session will be created.
     """
 
-    mcp_servers: Annotated[Iterable[McpServer], PropertyInfo(alias="mcpServers")]
+    mcp_servers: Iterable[McpServer]
     """A list of MCP server configurations.
 
     Each object must include a `serverName` and `serverUrl`.
@@ -36,7 +36,7 @@ class ClientRunAgentParams(TypedDict, total=False):
     rules: SequenceNotStr[str]
     """A list of constraints that the agent must follow."""
 
-    streaming: bool
+    streaming_tokens: bool
     """Whether to stream the agent messages token by token."""
 
     system: str

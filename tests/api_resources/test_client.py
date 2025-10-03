@@ -37,7 +37,7 @@ class TestClient:
             ],
             mode="flash",
             rules=["string"],
-            streaming=True,
+            streaming_tokens=True,
             system="system",
         )
         client_stream.response.close()
@@ -95,7 +95,7 @@ class TestAsyncClient:
             ],
             mode="flash",
             rules=["string"],
-            streaming=True,
+            streaming_tokens=True,
             system="system",
         )
         await client_stream.response.aclose()
