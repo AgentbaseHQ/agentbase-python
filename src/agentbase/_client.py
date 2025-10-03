@@ -202,6 +202,7 @@ class Agentbase(SyncAPIClient):
         *,
         message: str,
         session: str | Omit = omit,
+        datastores: Iterable[client_run_agent_params.Datastore] | Omit = omit,
         mcp_servers: Iterable[client_run_agent_params.McpServer] | Omit = omit,
         mode: Literal["flash", "fast", "max"] | Omit = omit,
         rules: SequenceNotStr[str] | Omit = omit,
@@ -230,6 +231,9 @@ class Agentbase(SyncAPIClient):
           session: The session ID to continue the agent session conversation. If not provided, a
               new session will be created.
 
+          datastores: A set of datastores for the agent to utilize. Each object must include a `id`
+              and `name`.
+
           mcp_servers: A list of MCP server configurations. Each object must include a `serverName` and
               `serverUrl`.
 
@@ -256,6 +260,7 @@ class Agentbase(SyncAPIClient):
             body=maybe_transform(
                 {
                     "message": message,
+                    "datastores": datastores,
                     "mcp_servers": mcp_servers,
                     "mode": mode,
                     "rules": rules,
@@ -451,6 +456,7 @@ class AsyncAgentbase(AsyncAPIClient):
         *,
         message: str,
         session: str | Omit = omit,
+        datastores: Iterable[client_run_agent_params.Datastore] | Omit = omit,
         mcp_servers: Iterable[client_run_agent_params.McpServer] | Omit = omit,
         mode: Literal["flash", "fast", "max"] | Omit = omit,
         rules: SequenceNotStr[str] | Omit = omit,
@@ -479,6 +485,9 @@ class AsyncAgentbase(AsyncAPIClient):
           session: The session ID to continue the agent session conversation. If not provided, a
               new session will be created.
 
+          datastores: A set of datastores for the agent to utilize. Each object must include a `id`
+              and `name`.
+
           mcp_servers: A list of MCP server configurations. Each object must include a `serverName` and
               `serverUrl`.
 
@@ -505,6 +514,7 @@ class AsyncAgentbase(AsyncAPIClient):
             body=await async_maybe_transform(
                 {
                     "message": message,
+                    "datastores": datastores,
                     "mcp_servers": mcp_servers,
                     "mode": mode,
                     "rules": rules,

@@ -29,6 +29,12 @@ class TestClient:
         client_stream = client.run_agent(
             message="message",
             session="session",
+            datastores=[
+                {
+                    "id": "id",
+                    "name": "name",
+                }
+            ],
             mcp_servers=[
                 {
                     "server_name": "serverName",
@@ -87,6 +93,12 @@ class TestAsyncClient:
         client_stream = await async_client.run_agent(
             message="message",
             session="session",
+            datastores=[
+                {
+                    "id": "id",
+                    "name": "name",
+                }
+            ],
             mcp_servers=[
                 {
                     "server_name": "serverName",

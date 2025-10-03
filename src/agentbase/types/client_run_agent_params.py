@@ -8,7 +8,7 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["ClientRunAgentParams", "McpServer"]
+__all__ = ["ClientRunAgentParams", "Datastore", "McpServer"]
 
 
 class ClientRunAgentParams(TypedDict, total=False):
@@ -19,6 +19,12 @@ class ClientRunAgentParams(TypedDict, total=False):
     """The session ID to continue the agent session conversation.
 
     If not provided, a new session will be created.
+    """
+
+    datastores: Iterable[Datastore]
+    """A set of datastores for the agent to utilize.
+
+    Each object must include a `id` and `name`.
     """
 
     mcp_servers: Iterable[McpServer]
@@ -41,6 +47,14 @@ class ClientRunAgentParams(TypedDict, total=False):
 
     system: str
     """A system prompt to provide system information to the agent."""
+
+
+class Datastore(TypedDict, total=False):
+    id: Required[str]
+    """The ID of the datastore."""
+
+    name: Required[str]
+    """The name of the datastore."""
 
 
 class McpServer(TypedDict, total=False):
