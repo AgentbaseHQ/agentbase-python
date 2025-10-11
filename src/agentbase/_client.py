@@ -38,7 +38,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import get_messages, clear_messages
+from .resources import agent, messages
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import AgentbaseError, APIStatusError
 from ._base_client import (
@@ -62,8 +62,8 @@ __all__ = [
 
 
 class Agentbase(SyncAPIClient):
-    get_messages: get_messages.GetMessagesResource
-    clear_messages: clear_messages.ClearMessagesResource
+    agent: agent.AgentResource
+    messages: messages.MessagesResource
     with_raw_response: AgentbaseWithRawResponse
     with_streaming_response: AgentbaseWithStreamedResponse
 
@@ -121,8 +121,8 @@ class Agentbase(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.get_messages = get_messages.GetMessagesResource(self)
-        self.clear_messages = clear_messages.ClearMessagesResource(self)
+        self.agent = agent.AgentResource(self)
+        self.messages = messages.MessagesResource(self)
         self.with_raw_response = AgentbaseWithRawResponse(self)
         self.with_streaming_response = AgentbaseWithStreamedResponse(self)
 
@@ -202,12 +202,17 @@ class Agentbase(SyncAPIClient):
         *,
         message: str,
         session: str | Omit = omit,
+        background: bool | Omit = omit,
+        callback: client_run_agent_params.Callback | Omit = omit,
         datastores: Iterable[client_run_agent_params.Datastore] | Omit = omit,
+        final_output: client_run_agent_params.FinalOutput | Omit = omit,
         mcp_servers: Iterable[client_run_agent_params.McpServer] | Omit = omit,
         mode: Literal["flash", "fast", "max"] | Omit = omit,
+        queries: Iterable[client_run_agent_params.Query] | Omit = omit,
         rules: SequenceNotStr[str] | Omit = omit,
         streaming_tokens: bool | Omit = omit,
         system: str | Omit = omit,
+        workflows: Iterable[client_run_agent_params.Workflow] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -231,8 +236,18 @@ class Agentbase(SyncAPIClient):
           session: The session ID to continue the agent session conversation. If not provided, a
               new session will be created.
 
+          background: Whether to run the agent asynchronously on the server. When set to true, use
+              callback parameter to receive events.
+
+          callback: A callback endpoint configuration to send agent message events back to. Use with
+              background true.
+
           datastores: A set of datastores for the agent to utilize. Each object must include a `id`
               and `name`.
+
+          final_output: Configuration for an extra final output event that processes the entire agent
+              message thread and produces a structured output based on the provided JSON
+              schema.
 
           mcp_servers: A list of MCP server configurations. Each object must include a `serverName` and
               `serverUrl`.
@@ -240,11 +255,18 @@ class Agentbase(SyncAPIClient):
           mode: The agent mode. Allowed values are `flash`, `fast` or `max`. Defaults to `fast`
               if not supplied.
 
+          queries: A set of custom actions based on datastore (database) queries. Allows you to
+              quickly define actions that the agent can use to query your datastores.
+
           rules: A list of constraints that the agent must follow.
 
           streaming_tokens: Whether to stream the agent messages token by token.
 
           system: A system prompt to provide system information to the agent.
+
+          workflows: A set of declarative workflows for the agent to execute. Each workflow is a DAG
+              (Directed Acyclic Graph) of steps that the agent interprets and executes
+              dynamically.
 
           extra_headers: Send extra headers
 
@@ -260,12 +282,17 @@ class Agentbase(SyncAPIClient):
             body=maybe_transform(
                 {
                     "message": message,
+                    "background": background,
+                    "callback": callback,
                     "datastores": datastores,
+                    "final_output": final_output,
                     "mcp_servers": mcp_servers,
                     "mode": mode,
+                    "queries": queries,
                     "rules": rules,
                     "streaming_tokens": streaming_tokens,
                     "system": system,
+                    "workflows": workflows,
                 },
                 client_run_agent_params.ClientRunAgentParams,
             ),
@@ -316,8 +343,8 @@ class Agentbase(SyncAPIClient):
 
 
 class AsyncAgentbase(AsyncAPIClient):
-    get_messages: get_messages.AsyncGetMessagesResource
-    clear_messages: clear_messages.AsyncClearMessagesResource
+    agent: agent.AsyncAgentResource
+    messages: messages.AsyncMessagesResource
     with_raw_response: AsyncAgentbaseWithRawResponse
     with_streaming_response: AsyncAgentbaseWithStreamedResponse
 
@@ -375,8 +402,8 @@ class AsyncAgentbase(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.get_messages = get_messages.AsyncGetMessagesResource(self)
-        self.clear_messages = clear_messages.AsyncClearMessagesResource(self)
+        self.agent = agent.AsyncAgentResource(self)
+        self.messages = messages.AsyncMessagesResource(self)
         self.with_raw_response = AsyncAgentbaseWithRawResponse(self)
         self.with_streaming_response = AsyncAgentbaseWithStreamedResponse(self)
 
@@ -456,12 +483,17 @@ class AsyncAgentbase(AsyncAPIClient):
         *,
         message: str,
         session: str | Omit = omit,
+        background: bool | Omit = omit,
+        callback: client_run_agent_params.Callback | Omit = omit,
         datastores: Iterable[client_run_agent_params.Datastore] | Omit = omit,
+        final_output: client_run_agent_params.FinalOutput | Omit = omit,
         mcp_servers: Iterable[client_run_agent_params.McpServer] | Omit = omit,
         mode: Literal["flash", "fast", "max"] | Omit = omit,
+        queries: Iterable[client_run_agent_params.Query] | Omit = omit,
         rules: SequenceNotStr[str] | Omit = omit,
         streaming_tokens: bool | Omit = omit,
         system: str | Omit = omit,
+        workflows: Iterable[client_run_agent_params.Workflow] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -485,8 +517,18 @@ class AsyncAgentbase(AsyncAPIClient):
           session: The session ID to continue the agent session conversation. If not provided, a
               new session will be created.
 
+          background: Whether to run the agent asynchronously on the server. When set to true, use
+              callback parameter to receive events.
+
+          callback: A callback endpoint configuration to send agent message events back to. Use with
+              background true.
+
           datastores: A set of datastores for the agent to utilize. Each object must include a `id`
               and `name`.
+
+          final_output: Configuration for an extra final output event that processes the entire agent
+              message thread and produces a structured output based on the provided JSON
+              schema.
 
           mcp_servers: A list of MCP server configurations. Each object must include a `serverName` and
               `serverUrl`.
@@ -494,11 +536,18 @@ class AsyncAgentbase(AsyncAPIClient):
           mode: The agent mode. Allowed values are `flash`, `fast` or `max`. Defaults to `fast`
               if not supplied.
 
+          queries: A set of custom actions based on datastore (database) queries. Allows you to
+              quickly define actions that the agent can use to query your datastores.
+
           rules: A list of constraints that the agent must follow.
 
           streaming_tokens: Whether to stream the agent messages token by token.
 
           system: A system prompt to provide system information to the agent.
+
+          workflows: A set of declarative workflows for the agent to execute. Each workflow is a DAG
+              (Directed Acyclic Graph) of steps that the agent interprets and executes
+              dynamically.
 
           extra_headers: Send extra headers
 
@@ -514,12 +563,17 @@ class AsyncAgentbase(AsyncAPIClient):
             body=await async_maybe_transform(
                 {
                     "message": message,
+                    "background": background,
+                    "callback": callback,
                     "datastores": datastores,
+                    "final_output": final_output,
                     "mcp_servers": mcp_servers,
                     "mode": mode,
+                    "queries": queries,
                     "rules": rules,
                     "streaming_tokens": streaming_tokens,
                     "system": system,
+                    "workflows": workflows,
                 },
                 client_run_agent_params.ClientRunAgentParams,
             ),
@@ -571,8 +625,8 @@ class AsyncAgentbase(AsyncAPIClient):
 
 class AgentbaseWithRawResponse:
     def __init__(self, client: Agentbase) -> None:
-        self.get_messages = get_messages.GetMessagesResourceWithRawResponse(client.get_messages)
-        self.clear_messages = clear_messages.ClearMessagesResourceWithRawResponse(client.clear_messages)
+        self.agent = agent.AgentResourceWithRawResponse(client.agent)
+        self.messages = messages.MessagesResourceWithRawResponse(client.messages)
 
         self.run_agent = to_raw_response_wrapper(
             client.run_agent,
@@ -581,8 +635,8 @@ class AgentbaseWithRawResponse:
 
 class AsyncAgentbaseWithRawResponse:
     def __init__(self, client: AsyncAgentbase) -> None:
-        self.get_messages = get_messages.AsyncGetMessagesResourceWithRawResponse(client.get_messages)
-        self.clear_messages = clear_messages.AsyncClearMessagesResourceWithRawResponse(client.clear_messages)
+        self.agent = agent.AsyncAgentResourceWithRawResponse(client.agent)
+        self.messages = messages.AsyncMessagesResourceWithRawResponse(client.messages)
 
         self.run_agent = async_to_raw_response_wrapper(
             client.run_agent,
@@ -591,8 +645,8 @@ class AsyncAgentbaseWithRawResponse:
 
 class AgentbaseWithStreamedResponse:
     def __init__(self, client: Agentbase) -> None:
-        self.get_messages = get_messages.GetMessagesResourceWithStreamingResponse(client.get_messages)
-        self.clear_messages = clear_messages.ClearMessagesResourceWithStreamingResponse(client.clear_messages)
+        self.agent = agent.AgentResourceWithStreamingResponse(client.agent)
+        self.messages = messages.MessagesResourceWithStreamingResponse(client.messages)
 
         self.run_agent = to_streamed_response_wrapper(
             client.run_agent,
@@ -601,8 +655,8 @@ class AgentbaseWithStreamedResponse:
 
 class AsyncAgentbaseWithStreamedResponse:
     def __init__(self, client: AsyncAgentbase) -> None:
-        self.get_messages = get_messages.AsyncGetMessagesResourceWithStreamingResponse(client.get_messages)
-        self.clear_messages = clear_messages.AsyncClearMessagesResourceWithStreamingResponse(client.clear_messages)
+        self.agent = agent.AsyncAgentResourceWithStreamingResponse(client.agent)
+        self.messages = messages.AsyncMessagesResourceWithStreamingResponse(client.messages)
 
         self.run_agent = async_to_streamed_response_wrapper(
             client.run_agent,

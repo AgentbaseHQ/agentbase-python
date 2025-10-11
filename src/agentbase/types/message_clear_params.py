@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["ClearMessageClearParams"]
+__all__ = ["MessageClearParams"]
 
 
-class ClearMessageClearParams(TypedDict, total=False):
+class MessageClearParams(TypedDict, total=False):
     session: Required[str]
     """The session ID to clear messages from."""

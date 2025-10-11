@@ -9,7 +9,7 @@ from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = [
-    "ClientRunAgentParams",
+    "AgentRunParams",
     "Callback",
     "Datastore",
     "FinalOutput",
@@ -21,7 +21,7 @@ __all__ = [
 ]
 
 
-class ClientRunAgentParams(TypedDict, total=False):
+class AgentRunParams(TypedDict, total=False):
     message: Required[str]
     """The task or message to run the agent with."""
 

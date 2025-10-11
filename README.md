@@ -11,7 +11,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.agentbase.sh](https://docs.agentbase.sh). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -137,6 +137,22 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
+
+## Nested params
+
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
+
+```python
+from agentbase import Agentbase
+
+client = Agentbase()
+
+response = client.run_agent(
+    message="message",
+    callback={"url": "https://example.com"},
+)
+print(response.callback)
+```
 
 ## Handling errors
 
