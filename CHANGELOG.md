@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 (2025-10-11)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/AgentbaseHQ/agentbase-python/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* **internal:** detect missing future annotations with ruff ([e29d902](https://github.com/AgentbaseHQ/agentbase-python/commit/e29d902cfc0603b22a87acba662be95db8a4a29c))
+
 ## 0.3.0 (2025-10-03)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/AgentbaseHQ/agentbase-python/compare/v0.2.0...v0.3.0)
