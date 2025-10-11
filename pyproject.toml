@@ -1,11 +1,11 @@
 [project]
 name = "agentbase-sdk"
-version = "0.3.1"
+version = "0.4.0"
 description = "The official Python library for the agentbase API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Agentbase", email = "" },
+{ name = "Agentbase", email = "team@agentbase.sh" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",

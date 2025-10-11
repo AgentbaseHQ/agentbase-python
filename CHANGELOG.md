@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2025-10-11)
+
+Full Changelog: [v0.3.1...v0.4.0](https://github.com/AgentbaseHQ/agentbase-python/compare/v0.3.1...v0.4.0)
+
+### Features
+
+* **api:** manual updates ([0dd1219](https://github.com/AgentbaseHQ/agentbase-python/commit/0dd12194314a6f967ee3ca879e3663da2b75a911))
+
 ## 0.3.1 (2025-10-11)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/AgentbaseHQ/agentbase-python/compare/v0.3.0...v0.3.1)

@@ -4,10 +4,10 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["ClearMessageClearResponse"]
+__all__ = ["MessageClearResponse"]
 
 
-class ClearMessageClearResponse(BaseModel):
+class MessageClearResponse(BaseModel):
     message: Optional[str] = None
     """Human‑readable status message."""
 

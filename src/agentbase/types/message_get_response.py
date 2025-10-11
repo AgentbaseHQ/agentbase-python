@@ -5,10 +5,10 @@ from typing_extensions import TypeAlias
 
 from .._models import BaseModel
 
-__all__ = ["GetMessageRetrieveResponse", "GetMessageRetrieveResponseItem"]
+__all__ = ["MessageGetResponse", "MessageGetResponseItem"]
 
 
-class GetMessageRetrieveResponseItem(BaseModel):
+class MessageGetResponseItem(BaseModel):
     content: str
     """The textual content of the message."""
 
@@ -19,4 +19,4 @@ class GetMessageRetrieveResponseItem(BaseModel):
     """
 
 
-GetMessageRetrieveResponse: TypeAlias = List[GetMessageRetrieveResponseItem]
+MessageGetResponse: TypeAlias = List[MessageGetResponseItem]
