@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["GetMessageRetrieveParams"]
+__all__ = ["MessageGetParams"]
 
 
-class GetMessageRetrieveParams(TypedDict, total=False):
+class MessageGetParams(TypedDict, total=False):
     session: Required[str]
     """The session ID to retrieve messages from."""

@@ -12,21 +12,21 @@ from agentbase import Agentbase, AsyncAgentbase
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestClient:
+class TestAgent:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @pytest.mark.skip(reason="Prism doesn't support text/event-stream responses")
     @parametrize
-    def test_method_run_agent(self, client: Agentbase) -> None:
-        client_stream = client.run_agent(
+    def test_method_run(self, client: Agentbase) -> None:
+        agent_stream = client.agent.run(
             message="message",
         )
-        client_stream.response.close()
+        agent_stream.response.close()
 
     @pytest.mark.skip(reason="Prism doesn't support text/event-stream responses")
     @parametrize
-    def test_method_run_agent_with_all_params(self, client: Agentbase) -> None:
-        client_stream = client.run_agent(
+    def test_method_run_with_all_params(self, client: Agentbase) -> None:
+        agent_stream = client.agent.run(
             message="message",
             session="session",
             background=True,
@@ -84,12 +84,12 @@ class TestClient:
                 }
             ],
         )
-        client_stream.response.close()
+        agent_stream.response.close()
 
     @pytest.mark.skip(reason="Prism doesn't support text/event-stream responses")
     @parametrize
-    def test_raw_response_run_agent(self, client: Agentbase) -> None:
-        response = client.with_raw_response.run_agent(
+    def test_raw_response_run(self, client: Agentbase) -> None:
+        response = client.agent.with_raw_response.run(
             message="message",
         )
 
@@ -99,8 +99,8 @@ class TestClient:
 
     @pytest.mark.skip(reason="Prism doesn't support text/event-stream responses")
     @parametrize
-    def test_streaming_response_run_agent(self, client: Agentbase) -> None:
-        with client.with_streaming_response.run_agent(
+    def test_streaming_response_run(self, client: Agentbase) -> None:
+        with client.agent.with_streaming_response.run(
             message="message",
         ) as response:
             assert not response.is_closed
@@ -112,23 +112,23 @@ class TestClient:
         assert cast(Any, response.is_closed) is True
 
 
-class TestAsyncClient:
+class TestAsyncAgent:
     parametrize = pytest.mark.parametrize(
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
     @pytest.mark.skip(reason="Prism doesn't support text/event-stream responses")
     @parametrize
-    async def test_method_run_agent(self, async_client: AsyncAgentbase) -> None:
-        client_stream = await async_client.run_agent(
+    async def test_method_run(self, async_client: AsyncAgentbase) -> None:
+        agent_stream = await async_client.agent.run(
             message="message",
         )
-        await client_stream.response.aclose()
+        await agent_stream.response.aclose()
 
     @pytest.mark.skip(reason="Prism doesn't support text/event-stream responses")
     @parametrize
-    async def test_method_run_agent_with_all_params(self, async_client: AsyncAgentbase) -> None:
-        client_stream = await async_client.run_agent(
+    async def test_method_run_with_all_params(self, async_client: AsyncAgentbase) -> None:
+        agent_stream = await async_client.agent.run(
             message="message",
             session="session",
             background=True,
@@ -186,12 +186,12 @@ class TestAsyncClient:
                 }
             ],
         )
-        await client_stream.response.aclose()
+        await agent_stream.response.aclose()
 
     @pytest.mark.skip(reason="Prism doesn't support text/event-stream responses")
     @parametrize
-    async def test_raw_response_run_agent(self, async_client: AsyncAgentbase) -> None:
-        response = await async_client.with_raw_response.run_agent(
+    async def test_raw_response_run(self, async_client: AsyncAgentbase) -> None:
+        response = await async_client.agent.with_raw_response.run(
             message="message",
         )
 
@@ -201,8 +201,8 @@ class TestAsyncClient:
 
     @pytest.mark.skip(reason="Prism doesn't support text/event-stream responses")
     @parametrize
-    async def test_streaming_response_run_agent(self, async_client: AsyncAgentbase) -> None:
-        async with async_client.with_streaming_response.run_agent(
+    async def test_streaming_response_run(self, async_client: AsyncAgentbase) -> None:
+        async with async_client.agent.with_streaming_response.run(
             message="message",
         ) as response:
             assert not response.is_closed
