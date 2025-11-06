@@ -29,6 +29,12 @@ class TestAgent:
         agent_stream = client.agent.run(
             message="message",
             session="session",
+            agents=[
+                {
+                    "description": "description",
+                    "name": "name",
+                }
+            ],
             background=True,
             callback={
                 "url": "https://example.com",
@@ -131,6 +137,12 @@ class TestAsyncAgent:
         agent_stream = await async_client.agent.run(
             message="message",
             session="session",
+            agents=[
+                {
+                    "description": "description",
+                    "name": "name",
+                }
+            ],
             background=True,
             callback={
                 "url": "https://example.com",
