@@ -50,6 +50,7 @@ class AgentResource(SyncAPIResource):
         *,
         message: str,
         session: str | Omit = omit,
+        agents: Iterable[agent_run_params.Agent] | Omit = omit,
         background: bool | Omit = omit,
         callback: agent_run_params.Callback | Omit = omit,
         datastores: Iterable[agent_run_params.Datastore] | Omit = omit,
@@ -84,6 +85,10 @@ class AgentResource(SyncAPIResource):
 
           session: The session ID to continue the agent session conversation. If not provided, a
               new session will be created.
+
+          agents: A set of agent configurations that enables the agent to transfer conversations
+              to other specialized agents. When provided, the main agent will have access to
+              seamless handoffs between agents based on the conversation context.
 
           background: Whether to run the agent asynchronously on the server. When set to true, use
               callback parameter to receive events.
@@ -131,6 +136,7 @@ class AgentResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "message": message,
+                    "agents": agents,
                     "background": background,
                     "callback": callback,
                     "datastores": datastores,
@@ -183,6 +189,7 @@ class AsyncAgentResource(AsyncAPIResource):
         *,
         message: str,
         session: str | Omit = omit,
+        agents: Iterable[agent_run_params.Agent] | Omit = omit,
         background: bool | Omit = omit,
         callback: agent_run_params.Callback | Omit = omit,
         datastores: Iterable[agent_run_params.Datastore] | Omit = omit,
@@ -217,6 +224,10 @@ class AsyncAgentResource(AsyncAPIResource):
 
           session: The session ID to continue the agent session conversation. If not provided, a
               new session will be created.
+
+          agents: A set of agent configurations that enables the agent to transfer conversations
+              to other specialized agents. When provided, the main agent will have access to
+              seamless handoffs between agents based on the conversation context.
 
           background: Whether to run the agent asynchronously on the server. When set to true, use
               callback parameter to receive events.
@@ -264,6 +275,7 @@ class AsyncAgentResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "message": message,
+                    "agents": agents,
                     "background": background,
                     "callback": callback,
                     "datastores": datastores,

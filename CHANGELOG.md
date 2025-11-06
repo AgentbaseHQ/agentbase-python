@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.5.0 (2025-11-06)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/AgentbaseHQ/agentbase-python/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** manual updates ([bd37cc0](https://github.com/AgentbaseHQ/agentbase-python/commit/bd37cc02bc033ed9a02a0fe412304620b1312884))
+
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([600e68b](https://github.com/AgentbaseHQ/agentbase-python/commit/600e68b0722c43c174af329d83a866dba0e62e7c))
+
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([1a2887c](https://github.com/AgentbaseHQ/agentbase-python/commit/1a2887c6b9db2682267a3a28999227c3f5d857de))
+* **internal/tests:** avoid race condition with implicit client cleanup ([c01d166](https://github.com/AgentbaseHQ/agentbase-python/commit/c01d166af2db0d272a571f244c088ff3dcd91bed))
+* **internal:** grammar fix (it's -&gt; its) ([e501e14](https://github.com/AgentbaseHQ/agentbase-python/commit/e501e1463942a61a8eea51fb86e83ed56cb76b59))
+
 ## 0.4.0 (2025-10-11)
 
 Full Changelog: [v0.3.1...v0.4.0](https://github.com/AgentbaseHQ/agentbase-python/compare/v0.3.1...v0.4.0)
