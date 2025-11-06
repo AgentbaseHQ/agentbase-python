@@ -10,6 +10,7 @@ from .._utils import PropertyInfo
 
 __all__ = [
     "AgentRunParams",
+    "Agent",
     "Callback",
     "Datastore",
     "FinalOutput",
@@ -29,6 +30,13 @@ class AgentRunParams(TypedDict, total=False):
     """The session ID to continue the agent session conversation.
 
     If not provided, a new session will be created.
+    """
+
+    agents: Iterable[Agent]
+    """
+    A set of agent configurations that enables the agent to transfer conversations
+    to other specialized agents. When provided, the main agent will have access to
+    seamless handoffs between agents based on the conversation context.
     """
 
     background: bool
@@ -90,6 +98,14 @@ class AgentRunParams(TypedDict, total=False):
     Each workflow is a DAG (Directed Acyclic Graph) of steps that the agent
     interprets and executes dynamically.
     """
+
+
+class Agent(TypedDict, total=False):
+    description: Required[str]
+    """Description of what this agent handles"""
+
+    name: Required[str]
+    """The name of the agent to transfer to"""
 
 
 class Callback(TypedDict, total=False):
