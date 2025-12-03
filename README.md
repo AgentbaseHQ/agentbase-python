@@ -85,6 +85,7 @@ pip install agentbase-sdk[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from agentbase import DefaultAioHttpClient
 from agentbase import AsyncAgentbase
@@ -92,7 +93,7 @@ from agentbase import AsyncAgentbase
 
 async def main() -> None:
     async with AsyncAgentbase(
-        api_key="My API Key",
+        api_key=os.environ.get("AGENTBASE_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.run_agent(
