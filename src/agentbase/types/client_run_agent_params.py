@@ -109,6 +109,11 @@ class Agent(TypedDict, total=False):
 
 
 class Callback(TypedDict, total=False):
+    """A callback endpoint configuration to send agent message events back to.
+
+    Use with background true.
+    """
+
     url: Required[str]
     """The webhook URL to send events to."""
 
@@ -125,6 +130,11 @@ class Datastore(TypedDict, total=False):
 
 
 class FinalOutput(TypedDict, total=False):
+    """
+    Configuration for an extra final output event that processes the entire agent
+    message thread and produces a structured output based on the provided JSON schema.
+    """
+
     name: Required[str]
     """Name for the final output."""
 
@@ -155,6 +165,8 @@ class Query(TypedDict, total=False):
 
 
 class WorkflowStepRetryPolicy(TypedDict, total=False):
+    """Retry configuration for the step."""
+
     backoff: str
 
     max_attempts: int
