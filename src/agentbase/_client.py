@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping, Iterable
+from typing import TYPE_CHECKING, Any, Mapping, Iterable
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -31,6 +31,7 @@ from ._utils import (
     get_async_library,
     async_maybe_transform,
 )
+from ._compat import cached_property
 from ._version import __version__
 from ._response import (
     to_raw_response_wrapper,
@@ -38,7 +39,6 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import agent, messages
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import AgentbaseError, APIStatusError
 from ._base_client import (
@@ -48,6 +48,11 @@ from ._base_client import (
     make_request_options,
 )
 from .types.run_agent_response import RunAgentResponse
+
+if TYPE_CHECKING:
+    from .resources import agent, messages
+    from .resources.agent import AgentResource, AsyncAgentResource
+    from .resources.messages import MessagesResource, AsyncMessagesResource
 
 __all__ = [
     "Timeout",
@@ -62,11 +67,6 @@ __all__ = [
 
 
 class Agentbase(SyncAPIClient):
-    agent: agent.AgentResource
-    messages: messages.MessagesResource
-    with_raw_response: AgentbaseWithRawResponse
-    with_streaming_response: AgentbaseWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -121,10 +121,25 @@ class Agentbase(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.agent = agent.AgentResource(self)
-        self.messages = messages.MessagesResource(self)
-        self.with_raw_response = AgentbaseWithRawResponse(self)
-        self.with_streaming_response = AgentbaseWithStreamedResponse(self)
+    @cached_property
+    def agent(self) -> AgentResource:
+        from .resources.agent import AgentResource
+
+        return AgentResource(self)
+
+    @cached_property
+    def messages(self) -> MessagesResource:
+        from .resources.messages import MessagesResource
+
+        return MessagesResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AgentbaseWithRawResponse:
+        return AgentbaseWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AgentbaseWithStreamedResponse:
+        return AgentbaseWithStreamedResponse(self)
 
     @property
     @override
@@ -349,11 +364,6 @@ class Agentbase(SyncAPIClient):
 
 
 class AsyncAgentbase(AsyncAPIClient):
-    agent: agent.AsyncAgentResource
-    messages: messages.AsyncMessagesResource
-    with_raw_response: AsyncAgentbaseWithRawResponse
-    with_streaming_response: AsyncAgentbaseWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -408,10 +418,25 @@ class AsyncAgentbase(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.agent = agent.AsyncAgentResource(self)
-        self.messages = messages.AsyncMessagesResource(self)
-        self.with_raw_response = AsyncAgentbaseWithRawResponse(self)
-        self.with_streaming_response = AsyncAgentbaseWithStreamedResponse(self)
+    @cached_property
+    def agent(self) -> AsyncAgentResource:
+        from .resources.agent import AsyncAgentResource
+
+        return AsyncAgentResource(self)
+
+    @cached_property
+    def messages(self) -> AsyncMessagesResource:
+        from .resources.messages import AsyncMessagesResource
+
+        return AsyncMessagesResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncAgentbaseWithRawResponse:
+        return AsyncAgentbaseWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncAgentbaseWithStreamedResponse:
+        return AsyncAgentbaseWithStreamedResponse(self)
 
     @property
     @override
@@ -636,43 +661,95 @@ class AsyncAgentbase(AsyncAPIClient):
 
 
 class AgentbaseWithRawResponse:
+    _client: Agentbase
+
     def __init__(self, client: Agentbase) -> None:
-        self.agent = agent.AgentResourceWithRawResponse(client.agent)
-        self.messages = messages.MessagesResourceWithRawResponse(client.messages)
+        self._client = client
 
         self.run_agent = to_raw_response_wrapper(
             client.run_agent,
         )
 
+    @cached_property
+    def agent(self) -> agent.AgentResourceWithRawResponse:
+        from .resources.agent import AgentResourceWithRawResponse
+
+        return AgentResourceWithRawResponse(self._client.agent)
+
+    @cached_property
+    def messages(self) -> messages.MessagesResourceWithRawResponse:
+        from .resources.messages import MessagesResourceWithRawResponse
+
+        return MessagesResourceWithRawResponse(self._client.messages)
+
 
 class AsyncAgentbaseWithRawResponse:
+    _client: AsyncAgentbase
+
     def __init__(self, client: AsyncAgentbase) -> None:
-        self.agent = agent.AsyncAgentResourceWithRawResponse(client.agent)
-        self.messages = messages.AsyncMessagesResourceWithRawResponse(client.messages)
+        self._client = client
 
         self.run_agent = async_to_raw_response_wrapper(
             client.run_agent,
         )
 
+    @cached_property
+    def agent(self) -> agent.AsyncAgentResourceWithRawResponse:
+        from .resources.agent import AsyncAgentResourceWithRawResponse
+
+        return AsyncAgentResourceWithRawResponse(self._client.agent)
+
+    @cached_property
+    def messages(self) -> messages.AsyncMessagesResourceWithRawResponse:
+        from .resources.messages import AsyncMessagesResourceWithRawResponse
+
+        return AsyncMessagesResourceWithRawResponse(self._client.messages)
+
 
 class AgentbaseWithStreamedResponse:
+    _client: Agentbase
+
     def __init__(self, client: Agentbase) -> None:
-        self.agent = agent.AgentResourceWithStreamingResponse(client.agent)
-        self.messages = messages.MessagesResourceWithStreamingResponse(client.messages)
+        self._client = client
 
         self.run_agent = to_streamed_response_wrapper(
             client.run_agent,
         )
 
+    @cached_property
+    def agent(self) -> agent.AgentResourceWithStreamingResponse:
+        from .resources.agent import AgentResourceWithStreamingResponse
+
+        return AgentResourceWithStreamingResponse(self._client.agent)
+
+    @cached_property
+    def messages(self) -> messages.MessagesResourceWithStreamingResponse:
+        from .resources.messages import MessagesResourceWithStreamingResponse
+
+        return MessagesResourceWithStreamingResponse(self._client.messages)
+
 
 class AsyncAgentbaseWithStreamedResponse:
+    _client: AsyncAgentbase
+
     def __init__(self, client: AsyncAgentbase) -> None:
-        self.agent = agent.AsyncAgentResourceWithStreamingResponse(client.agent)
-        self.messages = messages.AsyncMessagesResourceWithStreamingResponse(client.messages)
+        self._client = client
 
         self.run_agent = async_to_streamed_response_wrapper(
             client.run_agent,
         )
+
+    @cached_property
+    def agent(self) -> agent.AsyncAgentResourceWithStreamingResponse:
+        from .resources.agent import AsyncAgentResourceWithStreamingResponse
+
+        return AsyncAgentResourceWithStreamingResponse(self._client.agent)
+
+    @cached_property
+    def messages(self) -> messages.AsyncMessagesResourceWithStreamingResponse:
+        from .resources.messages import AsyncMessagesResourceWithStreamingResponse
+
+        return AsyncMessagesResourceWithStreamingResponse(self._client.messages)
 
 
 Client = Agentbase
